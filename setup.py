@@ -28,15 +28,6 @@ test_requirements = [
 ]
 
 
-def get_version(package):
-    """
-    Return package version as listed in `__version__` in `init.py`.
-    """
-    init_py = open(os.path.join(package, '__init__.py')).read()
-    return re.search("^__version__ = ['\"]([^'\"]+)['\"]",
-                     init_py, re.MULTILINE).group(1)
-
-
 def get_author(package):
     """
     Return package author as listed in `__author__` in `init.py`.
@@ -58,7 +49,6 @@ def get_email(package):
 # python setup.py register
 if sys.argv[-1] == 'publish':
     os.system("python setup.py sdist upload")
-    args = {'version': get_version(package)}
     print("You probably want to also tag the version now:")
     print("  git tag -a %(version)s -m 'version %(version)s'" % args)
     print("  git push --tags")
@@ -67,7 +57,8 @@ if sys.argv[-1] == 'publish':
 
 setup(
     name='tapioca-sectigo_api_ssl',
-    version=get_version(package),
+    version_format='{tag}.dev{commitcount}',
+    setup_requires=['setuptools-git-version'],
     description='sectigo_api_ssl API wrapper using tapioca',
     long_description=readme,
     author=get_author(package),
@@ -96,7 +87,9 @@ setup(
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
     test_suite='tests',
     tests_require=test_requirements
 )
+

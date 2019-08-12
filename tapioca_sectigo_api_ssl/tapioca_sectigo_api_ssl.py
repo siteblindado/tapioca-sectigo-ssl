@@ -1,5 +1,4 @@
 # coding: utf-8
-from requests.auth import HTTPBasicAuth
 from tapioca import (
     TapiocaAdapter, generate_wrapper_from_adapter, JSONAdapterMixin)
 
@@ -15,8 +14,9 @@ class Sectigo_api_sslClientAdapter(JSONAdapterMixin, TapiocaAdapter):
         params = super(Sectigo_api_sslClientAdapter, self).get_request_kwargs(
             api_params, *args, **kwargs)
 
-        params['auth'] = HTTPBasicAuth(
-            api_params.get('loginName'), api_params.get('loginPassword'))
+        params['headers'].update({
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'Accept': 'application/json'})
 
         return params
 

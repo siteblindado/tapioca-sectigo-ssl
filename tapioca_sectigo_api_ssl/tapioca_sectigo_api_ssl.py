@@ -1,22 +1,18 @@
 # coding: utf-8
 from tapioca import (
-    TapiocaAdapter, generate_wrapper_from_adapter, JSONAdapterMixin)
+    TapiocaAdapter, generate_wrapper_from_adapter, FormAdapterMixin)
 
 
 from .resource_mapping import RESOURCE_MAPPING
 
 
-class Sectigo_api_sslClientAdapter(JSONAdapterMixin, TapiocaAdapter):
+class Sectigo_api_sslClientAdapter(FormAdapterMixin, TapiocaAdapter):
     api_root = 'https://secure.comodo.com'
     resource_mapping = RESOURCE_MAPPING
 
     def get_request_kwargs(self, api_params, *args, **kwargs):
         params = super(Sectigo_api_sslClientAdapter, self).get_request_kwargs(
             api_params, *args, **kwargs)
-
-        params['headers'].update({
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'Accept': 'application/json'})
 
         return params
 

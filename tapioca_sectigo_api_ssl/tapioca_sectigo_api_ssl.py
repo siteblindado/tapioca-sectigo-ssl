@@ -7,7 +7,7 @@ from .resource_mapping import RESOURCE_MAPPING
 
 
 class Sectigo_api_sslClientAdapter(FormAdapterMixin, TapiocaAdapter):
-    api_root = 'https://secure.comodo.com'
+    api_root = 'https://secure.trust-provider.com'
     resource_mapping = RESOURCE_MAPPING
 
     def get_request_kwargs(self, api_params, *args, **kwargs):
